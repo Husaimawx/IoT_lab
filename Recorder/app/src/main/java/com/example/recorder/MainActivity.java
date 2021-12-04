@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
     final static int channelConfiguration = AudioFormat.CHANNEL_IN_STEREO;   // dual channel
     final static int audioEncoding = AudioFormat.ENCODING_PCM_16BIT;         // 16 bits
 
+    final static String HOST_NAME = "192.168.241.1";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,7 +93,10 @@ public class MainActivity extends AppCompatActivity {
 //                }
                 // generate and play
                 generateSound();
-                play(null, GENERATE_FILENAME);
+                Log.d("Play", "to play");
+//                play(null, GENERATE_FILENAME);
+                Log.d("Play", "played");
+//                uploadRecording();
             }
         });
 
@@ -349,9 +354,9 @@ public class MainActivity extends AppCompatActivity {
     private void uploadRecording() {
         FTPClient ftpClient = new FTPClient();
         try {
-            ftpClient.connect("xx.xx.xx.xx");
+            ftpClient.connect(HOST_NAME);
 
-            if (ftpClient.login("xxx", "xxx")) {
+            if (ftpClient.login("Zheng", "060143")) {
                 ftpClient.enterLocalPassiveMode();
                 ftpClient.setFileType(FTP.BINARY_FILE_TYPE);
 
