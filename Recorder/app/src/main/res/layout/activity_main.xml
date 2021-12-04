@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/select_play_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="80dp"
+        android:text="Select And Play" />
+
+    <LinearLayout
+        android:id="@+id/generate_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/select_play_button"
+        android:layout_marginTop="40dp">
+<!--        <EditText-->
+<!--            android:id="@+id/frequency_editor"-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:maxLines="1"-->
+<!--            android:minLines="1"-->
+<!--            android:lines="1"-->
+<!--            android:hint="frequency"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textSize="14sp" />-->
+        <Button
+            android:id="@+id/generate_play_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Generate And Play"
+            android:layout_marginStart="5dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/generate_layout"
+        android:layout_marginTop="40dp">
+<!--        <EditText-->
+<!--            android:id="@+id/sample_rate_editor"-->
+<!--            android:layout_width="100dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="5dp"-->
+<!--            android:maxLines="1"-->
+<!--            android:minLines="1"-->
+<!--            android:lines="1"-->
+<!--            android:text="48000"-->
+<!--            android:hint="sample rate"-->
+<!--            android:textAlignment="center"-->
+<!--            android:textSize="14sp" />-->
+        <Button
+            android:id="@+id/start_record_button"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="Start Record"
+            tools:ignore="ButtonStyle" />
+
+        <Button
+            android:id="@+id/stop_record_button"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:text="Stop Record"
+            tools:ignore="ButtonStyle" />
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
