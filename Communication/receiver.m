@@ -11,23 +11,23 @@ preamble_code = [0, 1, 0, 1, 0, 1, 0, 1];
 
 window = fs * duration;
 
-%% 读取音频文件
+% %% 读取音频文件
 [signal, fs] = audioread('sender.wav');
 
 
 % %% 录制音频
-% R = audiorecorder(fs, 16 ,1) ;  
+% R = audiorecorder(fs, 16 , 1) ;  
 % disp('Start speaking.')
-% recordblocking(R, 1);
+% recordblocking(R, 7);
 % disp('End of Recording.');
 % % 回放录音数据
 % play(R);
 % % 获取录音数据
-% myRecording = getaudiodata(R);
+% signal = getaudiodata(R);
 % % 绘制录音数据波形
-% plot(myRecording);
+% plot(signal);
 % % 写入音频文件
-% audiowrite('receiver.wav', myRecording, fs);
+% audiowrite('receiver.wav', signal, fs);
 
 signal = signal * 4.3;
 str = decode (signal, preamble_code, fs, duration, f, chirp_f1, chirp_f2);

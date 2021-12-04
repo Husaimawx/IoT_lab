@@ -33,10 +33,10 @@ while code_len > 0
 %     preamble_code
     package(1 : pre_len) = preamble_code;    
     package(pre_len + 1 : pre_len + header_len) = uint8tobinary(real_size);
-    
-    whole_length = pre_len + header_len + real_size;
-
-    header = package(1 : pre_len + header_len)
+    whole_length = pre_len + header_len + real_size
+    real_size
+    p =  package(1 : pre_len)
+    h =  package(pre_len +  1 : pre_len + header_len)
 
     % QAM调制信号
     part_signal = QAM_mod(package(1 : whole_length), fs, duration, f);

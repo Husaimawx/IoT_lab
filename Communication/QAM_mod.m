@@ -14,7 +14,7 @@ sigL = length(sigI);
 sig_cnt = length(code) / k;
 
 % 调制，得到I, Q
-dataInMatrix = reshape(code, sig_cnt, k);
+dataInMatrix = reshape(code, k, sig_cnt)';
 dataSymbolsIn = bi2de(dataInMatrix);
 dataMod = qammod(dataSymbolsIn, M, 'bin');
 I = real(dataMod)';
