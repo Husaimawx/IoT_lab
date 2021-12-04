@@ -26,4 +26,5 @@ dataMod = out_I + sqrt (-1) * out_Q;
 dataSymbolsOut = qamdemod(dataMod,M,'bin');
 dataOutMatrix = de2bi(dataSymbolsOut,k);
 code = dataOutMatrix(:);
+
 end
