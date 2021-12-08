@@ -10,7 +10,7 @@ chirp_signal = chirp(t, chirp_f1, duration, chirp_f2, 'linear');
 %% 分割数据并调制
 % 前导码 (Preamble) + 包头(Header) + 数据内容段(Payload)
 pre_len = length(preamble_code);
-header_len = 8;
+header_len = 12;
 payload_size = 240;
 window = fs * duration;
 
@@ -36,7 +36,7 @@ while code_len > 0
     % 前导码部分
     package(1 : pre_len) = preamble_code;    
     % 包头部分
-    package(pre_len + 1 : pre_len + header_len) = uint8tobinary(real_size);
+    package(pre_len + 1 : pre_len + header_len) = hamming_encode(uint8tobinary(real_size));
     
     whole_length = pre_len + header_len + real_size;
 
@@ -58,12 +58,4 @@ signal = [zeros(1, window), signal, zeros(1, window)];
 % 输出
 disp('Modulation succeed.');
 disp([num2str(package_cnt), ' package intotal.']);
-end
-
-function binary_code = uint8tobinary(num)
-    binary_code = zeros(1, 8);
-    for i = 1 : 8
-        binary_code(9-i) = bitand(num, 1);
-        num = bitshift(num, -1);
-    end
 end

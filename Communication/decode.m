@@ -5,7 +5,8 @@ window = fs * duration;
 %% 定义长度
 whole_signal_length = length(signal);
 pre_len = length(preamble_code);
-header_len = 8;
+header_len = 12;
+front_piece_cnt = (pre_len + header_len) / 4;
 
 massage = [];
 %% 寻找目标信号
@@ -23,26 +24,21 @@ while chirp_pos + window < whole_signal_length
     cut_size = start_pos - 1;
     
     % 解出前导码和包头 
-    temp_preamble_code = QAM_demod(signal(1 : 4 * window), fs, duration, f)';
+    temp_preamble_code = QAM_demod(signal(1 : front_piece_cnt * window), fs, duration, f)';
     
-    % 输出调试
+    % 包头信息
 %     preamble_code = temp_preamble_code(1 : pre_len)
     header_code = temp_preamble_code(pre_len + 1 : pre_len + header_len);
     
     % 计算数据包长度
-    payload_length = 0;
-    x = 1;
-    for i = 1:8
-        payload_length = payload_length + header_code(9 - i) * x;
-        x = x * 2;
-    end
+    data_length = hamming_decode(header_code);
+    real_length = binarytouint8(data_length);
 
-    real_length = payload_length;
     whole_length = pre_len + header_len + real_length;
     length_in_signal = (whole_length / 4) * window;
 
     % QAM 解调信号
-    payload = QAM_demod(signal(4 * window + 1 : length_in_signal), fs, duration, f)';
+    payload = QAM_demod(signal(front_piece_cnt * window + 1 : length_in_signal), fs, duration, f)';
     
     % 拼接
     massage = [massage, payload];
