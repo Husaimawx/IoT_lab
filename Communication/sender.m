@@ -10,8 +10,9 @@ chirp_f2 = 20500;                           % end freq
 preamble_code = [0, 1, 0, 1, 0, 1, 0, 1];
 
 %% 输入英文字符串
-% str = '#include <iostream> using namespace std;';
-str = 'When we allow freedom to ring, when we let it ring from every village and hamlet, from every state and city, we will be able to speed up that day when all of Gods children - black men and white men, Jews and Gentiles, Catholics and Protestants - will be able to join hands and to sing in the words of the old Negro spiritual, "Free at last, free at last; thank God Almighty, we are free at last.';
+str = '#include <iostream> using namespace std;';
+% str = 'A variety of integrity constraints have been studied for data cleaning. While these constraints can detect the presence of errors, they fall short of guiding us to correct the errors. Indeed, data repairing based on these constraints may not find certain fixes that are absolutely correct, and worse, may introduce new errors when repairing the data. We propose a method for finding certain fixes, based on master data, a notion of certain regions, and a class of editing rules. A certain region is a set of attributes that are assured correct by the users. Given a certain region and master data, editing rules tell us what attributes to fix and how to update them. We show how the method can be used in data monitoring and enrichment. We develop techniques for reasoning about editing rules, to decide whether they lead to a unique fix and whether they are able to fix all the attributes in a tuple, relative to master data and a certain region. We also provide an algorithm to identify minimal certain regions, such that a certain fix is warranted by editing rules and master data as long as one of the regions is correct. We experimentally verify the effectiveness and scalability of the algorithm.';
+
 % str = input('Please input a string\n','s');
 disp('Modulating...');
 

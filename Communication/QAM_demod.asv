@@ -17,11 +17,11 @@ sig_cnt = length(signal) / window;
 out_I = zeros(1, sig_cnt);
 out_Q = zeros(1, sig_cnt);
 for i = 1 : sig_cnt
-    part_sig = signal((i - 1) * window + 1 : i * window);
-%     out_I(i) = round(part_sig * sigI' / 600);
-%     out_Q(i) = round(part_sig * sigQ' / 600);
-    out_I(i) = part_sig * sigI' / window * 2;
-    out_Q(i) = part_sig * sigQ' / window * 2;
+    temp_sig = signal((i - 1) * window + 1 : i * window);
+%     out_I(i) = round(temp_sig * sigI' / 600);
+%     out_Q(i) = round(temp_sig * sigQ' / 600);
+    out_I(i) = temp_sig * sigI' / 600;
+    out_Q(i) = temp_sig * sigQ' / 600;
 end
 
 % 反推二进制码

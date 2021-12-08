@@ -11,6 +11,8 @@ preamble_code = [0, 1, 0, 1, 0, 1, 0, 1];
 %% 读取音频文件
 [signal, fs] = audioread('sender.wav');
 
+plot(signal);
+
 %% 录制音频
 % R = audiorecorder(fs, 16 , 1) ;  
 % disp('Start speaking.')
@@ -26,6 +28,7 @@ preamble_code = [0, 1, 0, 1, 0, 1, 0, 1];
 % audiowrite('receiver.wav', signal, fs);
 
 %% 解码
+signal = signal';
 signal = signal * 4.3;
 str = decode (signal, preamble_code, fs, duration, f, chirp_f1, chirp_f2);
 

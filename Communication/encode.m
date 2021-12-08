@@ -30,6 +30,9 @@ while code_len > 0
         real_size = code_len;
         code_len = 0;
     end
+
+%     real_size
+
     % 前导码部分
     package(1 : pre_len) = preamble_code;    
     % 包头部分
@@ -38,8 +41,8 @@ while code_len > 0
     whole_length = pre_len + header_len + real_size;
 
     % 调试输出
-    p =  package(1 : pre_len)
-    h =  package(pre_len +  1 : pre_len + header_len)
+%     p =  package(1 : pre_len)
+%     h =  package(pre_len +  1 : pre_len + header_len)
 
     % QAM调制信号
     part_signal = QAM_mod(package(1 : whole_length), fs, duration, f);
