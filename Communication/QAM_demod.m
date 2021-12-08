@@ -22,12 +22,10 @@ for i = 1 : sig_cnt
     out_Q(i) = round(temp_sig * sigQ' / 600);
 end
 
-outI = out_I
-OUTQ = out_Q
 % 反推二进制码
-dataMod = out_I + sqrt (-1) * out_Q
-dataSymbolsOut = qamdemod(dataMod,M,'bin')
-dataOutMatrix = de2bi(dataSymbolsOut,k)'
+dataMod = out_I + sqrt (-1) * out_Q;
+dataSymbolsOut = qamdemod(dataMod,M,'bin');
+dataOutMatrix = de2bi(dataSymbolsOut,k)';
 code = dataOutMatrix(:);
 
 end

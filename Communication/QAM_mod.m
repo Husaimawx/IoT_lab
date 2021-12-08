@@ -1,16 +1,16 @@
 function signal = QAM_mod(code, fs, duration, f)
-
 M = 16;
 k = log2(M);
 
-%设置每个采样点数据对应的时间
+% 设置每个采样点数据对应的时间
 t = 0 : 1 / fs : duration - 1 / fs;
+window = fs * duration;
 
-%产生同相正交两路载频信号
+% 产生同相正交两路载频信号
 sigI = sin(2 * pi * f * t);
 sigQ = cos(2 * pi * f * t);
 
-sigL = length(sigI); 
+% 片元数量
 sig_cnt = length(code) / k;
 
 % 调制，得到I, Q
@@ -21,9 +21,9 @@ I = real(dataMod)';
 Q = imag(dataMod)';
 
 % 得到signal
-signal = zeros(1, sigL * sig_cnt);
+signal = zeros(1, window * sig_cnt);
 for i = 1 : sig_cnt
-    signal((i - 1) * sigL + 1 : i * sigL) = I(i) * sigI + Q(i) * sigQ;
+    signal((i - 1) * window + 1 : i * window) = I(i) * sigI + Q(i) * sigQ;
 end
 
 end
