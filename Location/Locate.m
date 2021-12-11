@@ -1,5 +1,5 @@
 
-function [X] = location(nodes, distances)
+function [X] = Locate(nodes, distances)
 %     nodes = [0, 0; 2, 0; 1, 1.732];    % 定位信标的坐标
 %     distances = [1.155, 1.155, 1.155]; % 定位目标点到多个定位信标的距离
     n = length(distances);
