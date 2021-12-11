@@ -46,7 +46,7 @@ psub = str2double(psub) / fs
 %声速取343m/s，设备A和设备B自身的麦克风与扬声器间距取值20cm
 dAA = 0.2;
 dBB = 0.2;
-fprintf('Result: %f\n', 343 / 2 * (p2 - p1 - psub) + dAA + dBB);
+fprintf('Result: %f\n', 343 / 2 * (p2 - p1 - psub) + (dAA + dBB) / 2);
 
 %%
 fclose(Server);
