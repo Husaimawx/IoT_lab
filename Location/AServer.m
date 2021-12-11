@@ -5,8 +5,8 @@ PortN = 20000;
 
 %设备A发送调频连续波信号(chirp)，频率从4000Hz变化到6000Hz，持续0.5秒
 fs = 48000;
-T = 0.5;
-f1 = 4000; f2 = 6000; f3 = 8000;
+T = 1;
+f1 = 6000; f2 = 8000; f3 = 10000;
 t = linspace(0, T, fs * T);
 y = chirp(t, f1, T, f2);
 %%
@@ -44,8 +44,8 @@ psub = fgetl(Server)
 psub = str2double(psub) / fs
 
 %声速取343m/s，设备A和设备B自身的麦克风与扬声器间距取值20cm
-dAA = 0.2;
-dBB = 0.2;
+dAA = 0.1;
+dBB = 0.1;
 fprintf('Result: %f\n', 343 / 2 * (p2 - p1 - psub) + (dAA + dBB) / 2);
 
 %%
