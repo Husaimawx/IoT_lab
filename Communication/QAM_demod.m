@@ -11,7 +11,7 @@ t = (0 : 1 / fs : duration - 1 / fs);
 sigI = sin(2 * pi * f * t);
 sigQ = cos(2 * pi * f * t);
 
-sig_cnt = length(signal) / window;
+sig_cnt = ceil(length(signal) / window);
 
 % 解出I,Q
 out_I = zeros(1, sig_cnt);

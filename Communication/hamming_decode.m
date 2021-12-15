@@ -25,7 +25,7 @@ for i = 1:flag_len
 end
 % 定位错误码元位置并纠错
 wrong = reverse(wrong);
-wrong_index = bin2dec(wrong);
+wrong_index = bin2dec(wrong)
 if wrong_index ~= 0
     code(wrong_index) = ~code(wrong_index);
 end

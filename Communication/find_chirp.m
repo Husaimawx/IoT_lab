@@ -12,5 +12,4 @@ function start_pos = find_chirp(signal, fs, duration, chirp_f1, chirp_f2)
 %     plot(signal)
 
     [~, start_pos] = max(conv(signal, c, 'valid'));
-    start_pos = start_pos - 5;
 end

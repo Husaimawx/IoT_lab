@@ -7,36 +7,48 @@ code_len = length(code);
 t = (0 : 1 / fs : duration - 1 / fs);
 chirp_signal = chirp(t, chirp_f1, duration, chirp_f2, 'linear');
 
+%% 定义片段长度
+window = fs * duration;
+
+%% 生成标准QAM信号
+standard_signal = encode_standard(fs, duration, f);
+standard_signal = standard_signal / 4.3;
+
 %% 分割数据并调制
 % 前导码 (Preamble) + 包头(Header) + 数据内容段(Payload)
 pre_len = length(preamble_code);
 header_len = 12;
-payload_size = 240;
-window = fs * duration;
+package_whole_len = 256;
+payload_len = package_whole_len - pre_len - header_len;
 
-package = zeros(1, pre_len + header_len + payload_size);
+package = zeros(1, pre_len + header_len + payload_len);
 signal = [];
+signal = [signal, zeros(1, window), chirp_signal, standard_signal];
 package_cnt = 0;
 while code_len > 0
     package_cnt = package_cnt + 1;
     % 数据段部分
-    if code_len > payload_size
-        package(pre_len + header_len + 1 : pre_len + header_len + payload_size) = code(1 : payload_size);
-        real_size = payload_size;
-        code = code(payload_size + 1 : code_len);
-        code_len = code_len - payload_size;
+    if code_len > payload_len
+        package(pre_len + header_len + 1 : pre_len + header_len + payload_len) = code(1 : payload_len);
+        real_size = payload_len;
+        code = code(payload_len + 1 : code_len);
+        code_len = code_len - payload_len;
     else
         package(pre_len + header_len + 1 : pre_len + header_len + code_len) = code;
         real_size = code_len;
         code_len = 0;
     end
 
-%     real_size
-
+    
     % 前导码部分
-    package(1 : pre_len) = preamble_code;    
+    package(1 : pre_len) = preamble_code;
     % 包头部分
-    package(pre_len + 1 : pre_len + header_len) = hamming_encode(uint8tobinary(real_size));
+    header_code = hamming_encode(uint8tobinary(real_size));
+    package(pre_len + 1 : pre_len + header_len) = header_code;
+    
+    real_size
+    preamble_code
+    header_code
     
     whole_length = pre_len + header_len + real_size;
 
@@ -50,8 +62,9 @@ while code_len > 0
     part_signal = part_signal / 4.3;
 
     % 拼接信号
-    signal = [signal, zeros(1, window), chirp_signal, part_signal];
+    signal = [signal, zeros(1, window), chirp_signal, zeros(1, window), part_signal];
 end
+
 % 得到最终信号
 signal = [zeros(1, window), signal, zeros(1, window)];
 
