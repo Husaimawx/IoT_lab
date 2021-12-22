@@ -1,6 +1,6 @@
 function signal = QAM_mod(code, fs, duration, f)
 
-M = 16;
+M = 4;
 k = log2(M);
 
 %设置每个采样点数据对应的时间

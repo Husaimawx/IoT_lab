@@ -1,5 +1,5 @@
 function signal = QAM_mod(code, fs, duration, f)
-M = 16;
+M = 4;
 k = log2(M);
 
 % 设置每个采样点数据对应的时间
@@ -11,7 +11,7 @@ sigI = sin(2 * pi * f * t);
 sigQ = cos(2 * pi * f * t);
 
 % 片元数量
-sig_cnt = length(code) / k;
+sig_cnt = floor(length(code) / k);
 
 % 调制，得到I, Q
 dataInMatrix = reshape(code, k, sig_cnt)';
@@ -19,7 +19,6 @@ dataSymbolsIn = bi2de(dataInMatrix);
 dataMod = qammod(dataSymbolsIn, M, 'bin');
 I = real(dataMod)';
 Q = imag(dataMod)';
-
 % 得到signal
 signal = zeros(1, window * sig_cnt);
 for i = 1 : sig_cnt
