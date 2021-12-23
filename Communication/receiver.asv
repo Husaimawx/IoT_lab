@@ -12,9 +12,7 @@ chirp_f2 = 18000;                           % end freq
 % [signal, fs] = audioread('sender.wav');
 % [signal, fs] = audioread('receiver.wav');
 
-str = [];
-load sender.txt str
-str
+load 
 
 % % %% 录制音频
 % % R = audiorecorder(fs, 16 , 1) ;  

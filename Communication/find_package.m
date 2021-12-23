@@ -1,29 +1,31 @@
 function [start_pos, end_pos] = find_package(signal, window)
-window_size = 2400;
+window_size = 4800;
+signal = signal(window : length(signal));
 % 获得包络线
 temp_signal = abs(hilbert(signal));
-% figure(2)
-% plot(temp_signal);
-% % 滑动平均
-% movAvg = dsp.MovingAverage;
-% temp_signal = movAvg(temp_signal);
+figure(2)
+plot(temp_signal);
+% 滑动平均
 temp_signal = MovingAverageFilter(temp_signal, window_size);
 
 figure(3)
 plot(temp_signal);
 
+locs = find(temp_signal > 0.05 - 0.003 & temp_signal < 0.05 + 0.003);
+temp = locs(1);
+res_locs = temp;
+for i = 2 : length(locs)
+    if locs(i) - temp < window
+        i = i + 1;
+    else 
+        temp = locs(i);
+        res_locs = [res_locs, temp];
+    end
+end
 
-temp_signal = find_gap(temp_signal, 0.5, window_size);
-figure(4)
-plot(temp_signal);
+locs = res_locs;
+res_locs
 
-locs = find(temp_signal == 1);
-
-% for i = 1 : length(locs) - 1
-%     if locs(i + 1) - locs(i) < 4800
-%         locs = [locs(1 : i), locs(i + 1 : length(locs))];
-%     end
-% end
 if rem(length(locs), 2) ~= 0
     start_pos = [];
     end_pos = [];
@@ -59,18 +61,5 @@ for i = half_win:L-half_win
         temp(k) = x(j) ; %临时存储第i个窗的数据
     end
     x1(i) = mean(temp); %第i个窗里面的平均值给第i个数
-end
-end
-
-function res = find_gap(signal, threshold, window) 
-L = length(signal);
-res = zeros(L,1);
-pos = window;
-while pos < L
-    if abs(signal(pos - window + 1) - signal(pos)) > threshold
-        pos
-        res(pos - window) = 1;
-    end
-    pos = pos + window;
 end
 end

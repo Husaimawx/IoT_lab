@@ -9,7 +9,15 @@ chirp_f1 = 15000;                           % start freq
 chirp_f2 = 18000;                           % end freq
 
 %% 输入英文字符串
-str = 'When the summer holiday comes, students will have a long vacation, they have all kinds of plans. Some students will go back to their hometown, enjoy the time there and have a look at the beautiful scenery, some students will take a trip and relax. ';
+% str = 'When the summer holiday comes, students will ';
+
+%% 生成随机串
+symbols = '!' : '~';
+stLength = 200;
+nums = randi(numel(symbols),[1 stLength]);
+str = symbols (nums);
+save sender.txt -ascii str
+
 %% 编码
 signal = encode(str, fs, duration, f, chirp_f1, chirp_f2);
 
@@ -19,19 +27,3 @@ plot(signal);
 
 % %% 生成音频文件
 audiowrite('sender.wav', signal, fs);
-
-
-%% 播放音频
-R = audiorecorder(fs, 16 , 1) ;  
-record(R, 45);
-pause(1)
-sound(signal, fs);
-% 获取录音数据
-pause(45);
-signal_n = getaudiodata(R);
-
-figure(2);
-plot(signal_n)
-
-% 写入音频文件
-audiowrite('receiver.wav', signal_n, fs);
