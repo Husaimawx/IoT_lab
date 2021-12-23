@@ -14,7 +14,7 @@ standard_part_length = standard_piece_cnt * M * window;
 standard_signal = encode_standard(fs, duration, f);
 
 %% 拆分数据包 
-[start_pos, end_pos] = find_package(signal);
+[start_pos, end_pos] = find_package(signal, window);
 start_pos
 end_pos
 str = [];
@@ -25,7 +25,6 @@ for i = 1 : package_cnt
     figure(10);
     plot(package_signal);
     if end_pos(i) - start_pos(i) < window + standard_part_length
-        str = 'error';
         return
     end
     % 寻找目标信号

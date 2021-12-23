@@ -1,10 +1,10 @@
-function [start_pos, end_pos] = find_package(signal)
+function [start_pos, end_pos] = find_package(signal, window)
 window_size = 2400;
 % 获得包络线
 temp_signal = abs(hilbert(signal));
 % figure(2)
 % plot(temp_signal);
-% 滑动平均
+% % 滑动平均
 % movAvg = dsp.MovingAverage;
 % temp_signal = movAvg(temp_signal);
 temp_signal = MovingAverageFilter(temp_signal, window_size);
@@ -12,11 +12,13 @@ temp_signal = MovingAverageFilter(temp_signal, window_size);
 figure(3)
 plot(temp_signal);
 
+
 temp_signal = find_gap(temp_signal, 0.5, window_size);
 figure(4)
 plot(temp_signal);
 
 locs = find(temp_signal == 1);
+
 % for i = 1 : length(locs) - 1
 %     if locs(i + 1) - locs(i) < 4800
 %         locs = [locs(1 : i), locs(i + 1 : length(locs))];
