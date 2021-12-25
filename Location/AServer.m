@@ -1,4 +1,4 @@
-function [distance, dur] = AServer()
+function distance = AServer()
 %%
 % TCP连接，IP地址和端口可以自己设置，只需保证设备A和设备B一致即可
 IP = '0.0.0.0';
@@ -17,7 +17,6 @@ x=1
 fopen(Server);
 x=2
 %%
-tic;
 Rec = audiorecorder(fs, 16, 1);
 fprintf(Server, 'Server Ready');      %服务端发送消息给客户端，设备A准备开始发送声波
 rdy = fgetl(Server);                         %服务端收到客户端准备就绪的消息
@@ -50,7 +49,6 @@ dAA = 0.1;
 dBB = 0.1;
 distance = 343 / 2 * (p2 - p1 - psub) + (dAA + dBB) / 2;
 
-dur = toc;
 %%
 fclose(Server);
 end
