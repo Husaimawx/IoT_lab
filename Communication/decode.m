@@ -1,48 +1,47 @@
-function str = decode(signal, preamble_code, fs, duration, f, chirp_f1, chirp_f2)
-figure(1);
-plot(signal);
-signal = signal';
-
-%% TODO： 短信号解调
+function str = decode(signal, fs, duration, f, chirp_f1, chirp_f2)
+%% 定义变量
+% 片段长度
 window = fs * duration;
-pre_len = length(preamble_code);
+% 数据包各部分长度
 header_len = 8;
-massage = [];
-%% 寻找目标信号
-cut_size = 0;
-chirp_pos = find_chirp(signal, fs, duration, chirp_f1, chirp_f2);
-while cut_size + window < length(signal)
-%     length(signal)
-    start_pos = chirp_pos + window;
-    %% 除去chirp
-    signal = signal(start_pos - cut_size - 1: length(signal));
-    cut_pos = start_pos - cut_size;
-    cut_size = start_pos - 1;
-    
-    fit_size = min(16 * window, floor(length(signal) / window) * window)
-    temp_preamble_code = QAM_demod(signal(1 : fit_size), fs, duration, f)';
-    header_code = temp_preamble_code(pre_len + 1 : pre_len + header_len)
-    
-    payload_length = 0;
-    x = 1;
-    for i = 1:8
-        payload_length = payload_length + header_code(9 - i) * x;
-        x = x * 2;
+package_whole_len = 64;
+payload_len = package_whole_len - header_len;
+
+% QAM参数
+M = 4;
+standard_piece_cnt = 3;
+standard_part_length = standard_piece_cnt * M * window;
+standard_signal = encode_standard(fs, duration, f);
+
+%% 拆分数据包 
+[start_pos, end_pos] = find_package(signal, window);
+start_pos
+end_pos
+str = [];
+package_cnt = length(start_pos)
+for i = 1 : package_cnt
+    % 截取数据包     
+    package_signal = signal(start_pos(i) : end_pos(i));
+    figure(10);
+    plot(package_signal);
+    if end_pos(i) - start_pos(i) < window + standard_part_length
+        return
     end
+    % 寻找目标信号
+    first_chirp_pos = find_chirp(package_signal, fs, duration, chirp_f1, chirp_f2);
+    temp_signal = package_signal(first_chirp_pos : first_chirp_pos + 2 * window + standard_part_length);
+    delaytime = finddelay(standard_signal, temp_signal);
+    temp_signal = package_signal(first_chirp_pos + delaytime: first_chirp_pos + delaytime + standard_part_length);
+    [standard_i, standard_q] = decode_standard(temp_signal, fs, duration, f);
+    figure(2)
+    scatter(standard_i,standard_q);
     
-    whole_length = pre_len + header_len + payload_length;
-    ans = (whole_length / 4) * window
-    %% QAM 解调信号
-    payload = QAM_demod(signal(1 : (whole_length / 4) * window), fs, duration, f)';
-    payload = payload(pre_len + header_len + 1 : pre_len + header_len + payload_length);
-    massage = [massage, payload];
-    signal = signal(whole_length / 4 * window : length(signal));
-     
-%% 找chirp起始位置
-    chirp_pos = cut_size + find_chirp(signal, fs, duration, chirp_f1, chirp_f2);
-end
-
-%% 解码为字符串
-str = bin2string(massage);
-
+    payload_signal = package_signal(first_chirp_pos + delaytime + standard_part_length: length(package_signal));
+    package = QAM_demod(payload_signal, standard_i, standard_q, fs, duration, f)';
+    header = package(1 : 8);
+    data_code_length = binarytouint8(header);
+    data_code_length
+    data_code = package(9 : data_code_length + 8);
+    part_str = bin2string(data_code);
+    str = [str, part_str];
 end
