@@ -1,5 +1,3 @@
-clear;
-clc;
 
 %% 参数
 fs = 48000;
@@ -17,7 +15,7 @@ str = 'When the summer holiday comes, students will 1234567890    1234567890    
 % stLength = 200;
 % nums = randi(numel(symbols),[1 stLength]);
 % str = symbols (nums);
-save sender.txt -ascii str
+% save sender.txt -ascii str
 
 %% 编码
 signal = encode(str, fs, duration, f, chirp_f1, chirp_f2);
@@ -26,5 +24,5 @@ signal = encode(str, fs, duration, f, chirp_f1, chirp_f2);
 figure(1);
 plot(signal);
 
-% %% 生成音频文件
+%% 生成音频文件
 audiowrite('sender.wav', signal, fs);
