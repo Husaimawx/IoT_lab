@@ -9,13 +9,14 @@ chirp_f1 = 15000;                           % start freq
 chirp_f2 = 18000;                           % end freq
 
 %% 输入英文字符串
-% str = 'When the summer holiday comes, students will ';
+str = 'When the summer holiday comes, students will 1234567890    1234567890    1234567890    1234567890    1234567890    ';
 
-%% 生成随机串
-symbols = '!' : '~';
-stLength = 200;
-nums = randi(numel(symbols),[1 stLength]);
-str = symbols (nums);
+% % 生成随机串
+% symbols = '!' : '~';
+% symbols = 'a' : 'z';
+% stLength = 200;
+% nums = randi(numel(symbols),[1 stLength]);
+% str = symbols (nums);
 save sender.txt -ascii str
 
 %% 编码

@@ -4,7 +4,7 @@ function str = decode(signal, fs, duration, f, chirp_f1, chirp_f2)
 window = fs * duration;
 % 数据包各部分长度
 header_len = 8;
-package_whole_len = 256;
+package_whole_len = 64;
 payload_len = package_whole_len - header_len;
 
 % QAM参数

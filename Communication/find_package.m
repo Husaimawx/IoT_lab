@@ -11,7 +11,7 @@ temp_signal = MovingAverageFilter(temp_signal, window_size);
 figure(3)
 plot(temp_signal);
 
-locs = find(temp_signal > 0.05 - 0.003 & temp_signal < 0.05 + 0.003);
+locs = find(temp_signal > 0.1 - 0.003 & temp_signal < 0.1 + 0.003);
 temp = locs(1);
 res_locs = temp;
 for i = 2 : length(locs)

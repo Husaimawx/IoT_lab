@@ -8,33 +8,44 @@ f = 6000;                                  % 指定声音信号频率
 chirp_f1 = 15000;                           % start freq
 chirp_f2 = 18000;                           % end freq
 
-%% 读取音频文件
+% % 读取音频文件
 % [signal, fs] = audioread('sender.wav');
 % [signal, fs] = audioread('receiver.wav');
 
-str = [];
-load sender.txt str
-str
+%% 录制音频
+R = audiorecorder(fs, 16 , 1);
+record(R, 30);
+% 获取录音数据
+pause(30);
+signal_n = getaudiodata(R);
 
-% % %% 录制音频
-% % R = audiorecorder(fs, 16 , 1) ;  
-% % record(R, 9);
-% % % 获取录音数据
-% % pause(9);
-% % signal_n = getaudiodata(R);
-% % 
-% % figure(2);
-% % plot(signal_n)
-% % 
-% % % 写入音频文件
-% % audiowrite('receiver.wav', signal_n, fs);
-% % signal = signal_n;
-% % 
-% % 
-% % %% 解码
-% % signal = signal';
-% % str = decode (signal, fs, duration, f, chirp_f1, chirp_f2);
-% % 
-% % % 输出结果
-% % disp(['message:', str]);
-% % 
+figure(20);
+plot(signal_n)
+
+% 写入音频文件
+audiowrite('receiver.wav', signal_n, fs);
+signal = signal_n;
+
+
+%% 解码
+signal = signal';
+result_str = decode (signal, fs, duration, f, chirp_f1, chirp_f2);
+
+% 输出结果
+% disp(['result message: ', result_str]);
+result_str
+origin_str = importdata('sender.txt');
+origin_str = char(origin_str);
+% disp(['origin message: ', origin_str]);
+origin_str
+same_cnt = 0;
+for i = 1 : min(length(origin_str), length(result_str))
+if origin_str(i) == result_str(i)
+    same_cnt = same_cnt + 1;
+end
+end
+same_cnt
+len_res = length(result_str)
+len_ori = length(origin_str)
+same_cnt / length(origin_str)
+disp(['rate', same_cnt / length(origin_str)])

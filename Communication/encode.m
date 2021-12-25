@@ -4,7 +4,7 @@ function signal = encode(str, fs, duration, f, chirp_f1, chirp_f2)
 window = fs * duration;
 % 数据包各部分长度
 header_len = 8;
-package_whole_len = 256;
+package_whole_len = 64;
 payload_len = package_whole_len - header_len;
 % chirp信号
 t = (0 : 1 / fs : duration - 1 / fs);
@@ -37,8 +37,8 @@ while code_len > 0
     
     %% payload = header + code
     header_code = uint8tobinary(real_size);
+    real_size
     package = [header_code, package];
-    package
     payload = QAM_mod(package, fs, duration, f);
     payload = payload / max(payload);
 
