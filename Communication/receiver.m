@@ -18,9 +18,9 @@ record(R, 30);
 % 获取录音数据
 pause(30);
 signal_n = getaudiodata(R);
-
-figure(20);
-plot(signal_n)
+% 
+% figure(20);
+% plot(signal_n)
 
 % 写入音频文件
 audiowrite('receiver.wav', signal_n, fs);
@@ -32,20 +32,12 @@ signal = signal';
 result_str = decode (signal, fs, duration, f, chirp_f1, chirp_f2);
 
 % 输出结果
-% disp(['result message: ', result_str]);
-result_str
 origin_str = importdata('sender.txt');
 origin_str = char(origin_str);
-% disp(['origin message: ', origin_str]);
-origin_str
 same_cnt = 0;
 for i = 1 : min(length(origin_str), length(result_str))
 if origin_str(i) == result_str(i)
     same_cnt = same_cnt + 1;
 end
 end
-same_cnt
-len_res = length(result_str)
-len_ori = length(origin_str)
-same_cnt / length(origin_str)
 disp(['rate', same_cnt / length(origin_str)])

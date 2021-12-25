@@ -22,8 +22,6 @@ package_cnt = length(start_pos)
 for i = 1 : package_cnt
     % 截取数据包     
     package_signal = signal(start_pos(i) : end_pos(i));
-    figure(10);
-    plot(package_signal);
     if end_pos(i) - start_pos(i) < window + standard_part_length
         return
     end

@@ -3,13 +3,9 @@ window_size = 4800;
 signal = signal(window : length(signal));
 % 获得包络线
 temp_signal = abs(hilbert(signal));
-figure(2)
-plot(temp_signal);
+
 % 滑动平均
 temp_signal = MovingAverageFilter(temp_signal, window_size);
-
-figure(3)
-plot(temp_signal);
 
 locs = find(temp_signal > 0.1 - 0.003 & temp_signal < 0.1 + 0.003);
 temp = locs(1);
