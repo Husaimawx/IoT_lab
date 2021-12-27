@@ -18,9 +18,9 @@ record(R, 30);
 % 获取录音数据
 pause(30);
 signal_n = getaudiodata(R);
-% 
-% figure(20);
-% plot(signal_n)
+
+figure(20);
+plot(signal_n)
 
 % 写入音频文件
 audiowrite('receiver.wav', signal_n, fs);

@@ -3,10 +3,13 @@ window_size = 4800;
 signal = signal(window : length(signal));
 % 获得包络线
 temp_signal = abs(hilbert(signal));
-
+figure(31)
+plot(temp_signal)
 % 滑动平均
 temp_signal = MovingAverageFilter(temp_signal, window_size);
-
+figure(32)
+plot(temp_signal)
+% 找到起止点
 locs = find(temp_signal > 0.1 - 0.003 & temp_signal < 0.1 + 0.003);
 temp = locs(1);
 res_locs = temp;
@@ -20,7 +23,6 @@ for i = 2 : length(locs)
 end
 
 locs = res_locs;
-res_locs
 
 if rem(length(locs), 2) ~= 0
     start_pos = [];

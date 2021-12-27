@@ -15,6 +15,7 @@ standard_QAM_signal = standard_QAM_signal / max(standard_QAM_signal);
 
 %% 编码为二进制串
 code = string2bin( str )';
+code
 code_len = length(code);
 
 %% 分割数据
